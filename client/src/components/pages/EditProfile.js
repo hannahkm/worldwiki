@@ -2,20 +2,18 @@ import React, { Component } from "react";
 import { get } from "../../utilities";
 
 import "../../utilities.css";
-import "./Profile.css";
+import "./EditProfile.css";
 
-class Profile extends Component {
+class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       user: undefined,
-      catHappiness: 0,
     };
   }
 
   componentDidMount() {
-    document.title = "Profile Page";
-    get(`/api/user`, { userid: this.props.userId }).then((user) => this.setState({ user: user }));
+    document.title = "Edit Profile";
   }
 
   render() {
@@ -23,10 +21,9 @@ class Profile extends Component {
       return <div> Loading! </div>;
     }
     return (
-      <>
-      </>
+        <></>
     );
   }
 }
 
-export default Profile;
+export default EditProfile;
