@@ -1,0 +1,18 @@
+.Login-WelcomeScreen {
+    width: 90vw;
+    height: 100vh;
+    margin: auto;
+}
+
+.Login-WelcomeMessage {
+    margin-top: 10vh;
+    text-align: center;
+    font-size: 6vh;
+    font-weight: 600;
+}
+
+.Login-GoogleLogin {
+    padding-top: 5vh;
+    width: 20vw;
+    margin: auto;
+}

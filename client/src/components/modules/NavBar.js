@@ -1,57 +1,48 @@
-import React, { Component } from "react";
-import { Link } from "@reach/router";
-import GoogleLogin, { GoogleLogout } from "react-google-login";
+import React, { Component } from 'react'
+import { Link } from '@reach/router'
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'
 
-import "./NavBar.css";
-
-// This identifies your web application to Google's authentication service
-const GOOGLE_CLIENT_ID = "121479668229-t5j82jrbi9oejh7c8avada226s75bopn.apps.googleusercontent.com";
+import '../../utilities.css'
+import './NavBar.css'
 
 /**
  * The navigation bar at the top of all pages. Takes no props.
  */
 class NavBar extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
   }
 
-  render() {
+  render () {
     return (
-      <nav className="NavBar-container">
-        <div className="NavBar-title u-inlineBlock">WorldWiki</div>
-        <div className="NavBar-linkContainer u-inlineBlock">
-          <Link to="/" className="NavBar-link">
-            Home
-          </Link>
-          {this.props.userId && (
-            <Link to={`/profile/${this.props.userId}`} className="NavBar-link">
-              Profile
+      <GoogleOAuthProvider clientId={this.props.GOOGLE_CLIENT_ID}>
+        <nav className="NavBar-container">
+          <div className="NavBar-title u-inlineBlock">WorldWiki</div>
+          <div className="NavBar-linkContainer u-inlineBlock">
+            <Link to="/" className="NavBar-link">
+              Home
             </Link>
-          )}
-          <Link to="/about/" className="NavBar-link">
-            About
-          </Link>
-          {this.props.userId ? (
-            <GoogleLogout
-              clientId={GOOGLE_CLIENT_ID}
-              buttonText="Logout"
-              onLogoutSuccess={this.props.handleLogout}
-              onFailure={(err) => console.log(err)}
-              className="NavBar-link NavBar-login"
-            />
-          ) : (
+            {this.props.userId && (
+              <Link to={`/profile/${this.props.userId}`} className="NavBar-link">
+                Profile
+              </Link>
+            )}
+            <Link to="/about/" className="NavBar-link">
+              About
+            </Link>
+            <Link to="/comingSoon/" className="NavBar-link">
+              Explore
+            </Link>
             <GoogleLogin
-              clientId={GOOGLE_CLIENT_ID}
-              buttonText="Login"
               onSuccess={this.props.handleLogin}
-              onFailure={(err) => console.log(err)}
-              className="NavBar-link NavBar-login"
+              onError={(err) => console.log(err)}
+              className="NavBar-link"
             />
-          )}
-        </div>
-      </nav>
-    );
+          </div>
+        </nav>
+      </GoogleOAuthProvider>
+    )
   }
 }
 
-export default NavBar;
+export default NavBar

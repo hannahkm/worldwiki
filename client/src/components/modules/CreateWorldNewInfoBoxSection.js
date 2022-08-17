@@ -1,23 +1,22 @@
-import React, { Component } from "react";
-import { get } from "../../utilities";
+import React, { Component } from 'react'
 
-import "./CreateWorldNewInfoBoxSection.css";
+import './CreateWorldNewInfoBoxSection.css'
 
 class CreateWorldNewInfoBoxSection extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
-    };
+    }
   }
 
-  componentDidMount() {
+  componentDidMount () {
   }
 
-  render() {
+  render () {
     return (
       <></>
-    );
+    )
   }
 }
 
-export default CreateWorldNewInfoBoxSection;
+export default CreateWorldNewInfoBoxSection

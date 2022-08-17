@@ -1,0 +1,17 @@
+.HomeTable-Header {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.HomeTable-NewWorld {
+    background-color: var(--grey);
+    border-radius: 12px;
+    width: 8vw;
+    height: 4vh;
+    text-align: center;
+    text-decoration: none;
+}

@@ -1,0 +1,33 @@
+.HomeTableRow-Container {
+    width: 90%;
+    height: 2vh;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 3vh;
+}
+
+.HomeTableRow-WorldName {
+    color: black;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.HomeTableRow-Link {
+    color: black;
+    text-decoration: none;
+}
+
+.HomeTableRow-Link:visited {
+    color: black;
+    text-decoration: none;
+}
+
+.HomeTableRow-WorldName:hover {
+    color: var(--darkgrey);
+}
+
+.HomeTableRow-WorldInfo{
+    color: var(--darkgrey);
+}

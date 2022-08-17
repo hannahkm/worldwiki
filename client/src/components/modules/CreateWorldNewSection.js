@@ -1,23 +1,22 @@
-import React, { Component } from "react";
-import { get } from "../../utilities";
+import React, { Component } from 'react'
 
-import "./CreateWorldNewSection.css";
+import './CreateWorldNewSection.css'
 
 class CreateWorldNewSection extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
-    };
+    }
   }
 
-  componentDidMount() {
+  componentDidMount () {
   }
 
-  render() {
+  render () {
     return (
       <></>
-    );
+    )
   }
 }
 
-export default CreateWorldNewSection;
+export default CreateWorldNewSection

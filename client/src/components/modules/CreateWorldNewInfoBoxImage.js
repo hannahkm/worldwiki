@@ -1,23 +1,22 @@
-import React, { Component } from "react";
-import { get } from "../../utilities";
+import React, { Component } from 'react'
 
-import "./CreateWorldNewInfoBoxImage.css";
+import './CreateWorldNewInfoBoxImage.css'
 
 class CreateWorldNewInfoBoxImage extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
-    };
+    }
   }
 
-  componentDidMount() {
+  componentDidMount () {
   }
 
-  render() {
+  render () {
     return (
       <></>
-    );
+    )
   }
 }
 
-export default CreateWorldNewInfoBoxImage;
+export default CreateWorldNewInfoBoxImage

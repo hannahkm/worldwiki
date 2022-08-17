@@ -1,23 +1,35 @@
-import React, { Component } from "react";
-import { get } from "../../utilities";
+import React, { Component } from 'react'
 
-import "./WikiPageSection.css";
+import './WikiPageSection.css'
 
 class WikiPageSection extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
-    };
+      section: undefined
+    }
   }
 
-  componentDidMount() {
+  componentDidMount () {
   }
 
-  render() {
+  render () {
+    if (!this.state.section) {
+      return (
+        <></>
+      )
+    }
     return (
-      <></>
-    );
+      <>
+        <div className="WikiPageSection-Heading">
+          <h1 className="WikiPageSection-SectionName">{this.state.section.sectionName}</h1>
+          <div className="WikiPageSection-EditButton">[Edit]</div>
+          <hr/>
+        </div>
+        <div className="WikiPageSection-Content">{this.state.section.sectionContent}</div>
+      </>
+    )
   }
 }
 
-export default WikiPageSection;
+export default WikiPageSection

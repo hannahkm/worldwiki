@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import { get } from '../../utilities'
 
 import '../../utilities.css'
-import './About.css'
+import './ComingSoon.css'
 
-class About extends Component {
+class ComingSoon extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -11,7 +12,7 @@ class About extends Component {
   }
 
   componentDidMount () {
-    document.title = 'About WorldWiki'
+    document.title = 'Page Coming Soon'
   }
 
   render () {
@@ -21,4 +22,4 @@ class About extends Component {
   }
 }
 
-export default About
+export default ComingSoon
