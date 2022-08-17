@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { get } from '../../utilities'
+import { Link } from '@reach/router'
+// import { get } from '../../utilities'
 
 import './HomeTable.css'
 
@@ -20,7 +21,7 @@ class HomeTable extends Component {
 
   componentDidMount () {
     this.setState({ user: this.props.user })
-    get('/api/user/worlds', {}).then((worlds) => this.setState({ userWorlds: worlds }))
+    // get('/api/user/worlds', {}).then((worlds) => this.setState({ userWorlds: worlds }))
   }
 
   render () {
@@ -35,11 +36,13 @@ class HomeTable extends Component {
       <>
         <div className="HomeTable-Header">
           <h1 className="HomeTable-Heading">Your Worlds</h1>
-          <button className="HomeTable-NewWorld">New World</button>
+          <Link to="/newWorld">
+            <button className="HomeTable-NewWorld">New World</button>
+          </Link>
         </div>
         <div className="HomeTable-TableContainer">
           {this.state.userWorlds.map((world) => (
-            <HomeTableRow world={world}/>
+            <HomeTableRow world={world} key={world.id}/>
           ))}
         </div>
       </>

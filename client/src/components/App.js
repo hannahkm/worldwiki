@@ -10,8 +10,6 @@ import NotFound from './pages/NotFound.js'
 import Profile from './pages/Profile.js'
 import WikiPage from './pages/WikiPage.js'
 
-import jwtDecode from 'jwt-decode'
-
 import { get, post } from '../utilities'
 
 // to use styles, import the necessary CSS files
@@ -42,10 +40,11 @@ class App extends Component {
   }
 
   handleLogin = (res) => {
-    const userInfo = jwtDecode(res.credential)
-    console.log(`Logged in as ${userInfo.name}`)
-    const userToken = userInfo.sub
-    this.setState({ userId: userToken })
+    console.log(res)
+    post('/api/login', { token: res.credential }).then((user) => {
+      console.log(`Logged in as ${user.name}`)
+      this.setState({ userId: user._id })
+    })
   }
 
   handleLogout = () => {

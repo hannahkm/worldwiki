@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { get } from '../../utilities'
+import { Link } from '@reach/router'
 
 import '../../utilities.css'
 import './Profile.css'
@@ -26,8 +27,10 @@ class Profile extends Component {
       <>
         <div className="Profile-Heading">
           <h1 className="Profile-UserName">{this.state.user.name}</h1>
-          <div className="Profile-EditButton">[Edit]</div>
-            <hr/>
+          <Link to={`/editProfile/${this.state.user.id}`}>
+            <div className="Profile-EditButton">[Edit]</div>
+          </Link>
+          <hr/>
           </div>
           <div className="Profile-IntroContent">
             <div className="Profile-IntroContentLeft">
