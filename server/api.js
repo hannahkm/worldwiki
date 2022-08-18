@@ -33,6 +33,12 @@ router.get('/whoami', (req, res) => {
   res.send(req.user)
 })
 
+// HELPER FUNCTIONS
+const addToMap = (m, key, value) => {
+  const newMap = new Map([[key, value]])
+  return new Map([...m, ...newMap])
+}
+
 // USER API CALLS
 
 router.get('/user', (req, res) => {
@@ -51,29 +57,36 @@ router.get('/activeUsers', (req, res) => {
   res.send({ activeUsers: socketManager.getAllConnectedUsers() })
 })
 
-// anything else falls to this "not found" case
-router.all('*', (req, res) => {
-  console.log(`API route not found: ${req.method} ${req.url}`)
-  res.status(404).send({ msg: 'API route not found' })
-})
-
-module.exports = router
-
 // WORLD API CALLS
 
 // get a world given its ID
-router.get('/world', (req, res) => {
-  World.findById(req.query.worldId).then((world) => {
-    res.send(world)
+router.get('/getOrCreateBlankWorld', (req, res) => {
+  World.findOne({
+    pageId: req.query.worldId
+  }).then((world) => {
+    if (world) res.send(world)
+
+    const newWorld = new World({
+      pageId: mongoose.Types.ObjectId(),
+      pageName: '',
+      pageAuthor: req.query.userId,
+      pageDescription: '',
+      infoBox: {
+        infoImage: '',
+        infoSections: new Map()
+      },
+      sections: new Map()
+    })
+    newWorld.save().then((w) => res.send(w))
   })
 })
 
 // create a new ID -- worlds are initialized with empty info box and empty sections
-router.get('/newWorld', (req, res) => {
+router.post('/newWorld', (req, res) => {
   const newWorld = new World({
     pageId: mongoose.Types.ObjectId(),
     pageName: req.query.worldName,
-    pageAuthor: String,
+    pageAuthor: '',
     pageDescription: req.query.worldDescription,
     infoBox: {
       infoImage: req.query.infoImageURL,
@@ -110,7 +123,11 @@ router.post('/world/newInfoSection', (req, res) => {
     pageId: req.body.worldId
   }).then((world) => {
     if (!world.infoBox.infoSections.has(req.body.sectionName)) {
-      world.infoBox.infoSections.set(req.body.sectionName, new Map())
+      const newInfoSections = addToMap(world.infoBox.infoSections, req.body.sectionName, req.body.sectionContent)
+      world.infoBox.infoSections = newInfoSections
+      world.save().then((w) => res.send(w))
+    } else {
+      res.send(world)
     }
   })
 })
@@ -123,8 +140,26 @@ router.post('/world/editInfoSection', (req, res) => {
     if (!world.infoBox.infoSections.has(req.body.sectionName)) {
       res.send({})
     } else {
-      world.infoBox.infoSections.get(req.body.sectionName).set(req.body.contentLabel, req.body.contentValue)
+      const newInfoSubSections = addToMap(world.infoBox.infoSections.get(req.body.sectionName), req.body.contentLabel, req.body.contentValue)
+      const newInfoSections = addToMap(world.infoBox.infoSections, req.body.sectionName, newInfoSubSections)
+      world.infoBox.infoSections = newInfoSections
       world.save().then((w) => res.send(w))
+    }
+  })
+})
+
+// add a new section, if it doesn't already exist
+router.post('/world/newSection', (req, res) => {
+  World.findOne({
+    pageId: req.body.worldId
+  }).then((world) => {
+    if (!world.sections.has(req.body.sectionName)) {
+      world.sections = addToMap(world.sections, req.body.sectionName, req.body.sectionContent)
+      world.save().then((w) => {
+        res.send(w)
+      })
+    } else {
+      res.send(world)
     }
   })
 })
@@ -134,7 +169,16 @@ router.post('/world/editSection', (req, res) => {
   World.findOne({
     pageId: req.body.worldId
   }).then((world) => {
-    world.sections.set(req.body.sectionName, req.body.sectionContent)
+    const newSections = addToMap(world.sections, req.body.sectionName, req.body.sectionContent)
+    world.sections = newSections
     world.save().then((w) => res.send(w))
   })
 })
+
+// anything else falls to this "not found" case
+router.all('*', (req, res) => {
+  console.log(`API route not found: ${req.method} ${req.url}`)
+  res.status(404).send({ msg: 'API route not found' })
+})
+
+module.exports = router

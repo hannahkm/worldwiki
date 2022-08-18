@@ -9,7 +9,7 @@ const WorldSchema = new mongoose.Schema({
     infoImage: String,
     infoSections: {
       type: Map,
-      of: Map
+      of: String
     }
   },
   sections: {

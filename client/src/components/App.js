@@ -26,7 +26,8 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      userId: undefined
+      userId: undefined,
+      worldId: ''
     }
   }
 
@@ -40,7 +41,6 @@ class App extends Component {
   }
 
   handleLogin = (res) => {
-    console.log(res)
     post('/api/login', { token: res.credential }).then((user) => {
       console.log(`Logged in as ${user.name}`)
       this.setState({ userId: user._id })
@@ -56,7 +56,7 @@ class App extends Component {
   // shows up on screen
   render () {
     return (
-      <>
+      <div className="App-body">
         {this.state.userId
           ? <NavBar
             handleLogin={this.handleLogin}
@@ -73,12 +73,12 @@ class App extends Component {
             <ComingSoon path="/comingSoon/" />
             <Profile path="/profile/:userId" />
             <EditProfile path="/editProfile/:userId"/>
-            <CreateWorld path="/newWorld/" userId={this.state.userId} />
-            <WikiPage path="/page/:pageName"/>
+            <CreateWorld path="/newWorld/" worldId={this.state.worldId} userId={this.state.userId} />
+            <WikiPage path="/page/:pageId"/>
             <NotFound default />
           </Router>
         </div>
-      </>
+      </div>
     )
   }
 }

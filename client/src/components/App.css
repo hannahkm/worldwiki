@@ -1,7 +1,12 @@
-.App-container {
+.App-body {
   background-color: var(--white);
   width: 100vw;
   height: 100vh;
-  padding: var(--m) var(--m);
+  overflow: hidden;
+}
+
+.App-container {
+  width: 90vw;
   margin: auto;
+  padding: var(--s) var(--s);
 }

@@ -1,8 +1,10 @@
 .NavBar-container {
   padding: var(--s) var(--m);
+  height: 5vh;
   background-color: var(--off-white);
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .NavBar-title {
@@ -12,6 +14,8 @@
 
 .NavBar-linkContainer {
   margin-left: var(--l);
+  display: flex;
+  flex-direction: row;
 }
 
 .NavBar-link,

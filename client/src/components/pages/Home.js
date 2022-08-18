@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { get } from '../../utilities'
 
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'
 
@@ -16,7 +17,9 @@ class Home extends Component {
 
   componentDidMount () {
     document.title = 'Home'
-    // get(`/api/user`, { userid: this.props.userId }).then((user) => this.setState({ user: user }));
+    if (this.props.userId) {
+      get('/api/user', { userid: this.props.userId }).then((user) => this.setState({ user }))
+    }
   }
 
   render () {
