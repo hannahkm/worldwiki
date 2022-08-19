@@ -57,6 +57,13 @@ router.get('/activeUsers', (req, res) => {
   res.send({ activeUsers: socketManager.getAllConnectedUsers() })
 })
 
+router.post('/user/addWorld', (req, res) => {
+  User.findById(req.body.userId).then((user) => {
+    user.ownedWorlds = [...user.ownedWorlds, req.body.worldId]
+    user.save().then((u) => res.send(u))
+  })
+})
+
 // WORLD API CALLS
 
 // get a world given its ID
@@ -66,18 +73,20 @@ router.get('/getOrCreateBlankWorld', (req, res) => {
   }).then((world) => {
     if (world) res.send(world)
 
-    const newWorld = new World({
-      pageId: mongoose.Types.ObjectId(),
-      pageName: '',
-      pageAuthor: req.query.userId,
-      pageDescription: '',
-      infoBox: {
-        infoImage: '',
-        infoSections: new Map()
-      },
-      sections: new Map()
-    })
-    newWorld.save().then((w) => res.send(w))
+    else {
+      const newWorld = new World({
+        pageId: mongoose.Types.ObjectId(),
+        pageName: '',
+        pageAuthor: req.query.userId,
+        pageDescription: '',
+        infoBox: {
+          infoImage: '',
+          infoSections: new Map()
+        },
+        sections: new Map()
+      })
+      newWorld.save().then((w) => res.send(w))
+    }
   })
 })
 

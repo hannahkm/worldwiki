@@ -36,7 +36,7 @@ class Profile extends Component {
             <div className="Profile-IntroContentLeft">
               <div className="Profile-IntroDescription"></div>
             </div>
-            <ProfileInfoBox user={this.state.user} class="Profile-InfoBox"/>
+            <ProfileInfoBox user={this.state.user} className="Profile-InfoBox"/>
           </div>
         <div className="Profile-Content"></div>
       </>

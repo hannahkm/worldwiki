@@ -81,7 +81,12 @@ class CreateWorld extends Component {
       worldDescription: this.state.worldDescription
     })
 
-    navigate(`/WikiPage/${this.state.worldId}`)
+    post('/api/user/addWorld', {
+      userId: this.props.userId,
+      worldId: this.state.worldId
+    }).then((u) => console.log(u))
+
+    // navigate(`/WikiPage/${this.state.worldId}`)
   }
 
   render () {

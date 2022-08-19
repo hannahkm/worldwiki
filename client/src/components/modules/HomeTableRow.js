@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from '@reach/router'
+import { get } from '../../utilities'
 
 import './HomeTableRow.css'
 
@@ -12,9 +13,8 @@ class HomeTableRow extends Component {
   }
 
   componentDidMount () {
-    console.log(this.props.world)
-    this.setState({ world: this.props.world })
-    // get(`/api/world`, {}).then((world) => this.setState({world: world}));
+    console.log(this.props.worldId)
+    get('/api/getOrCreateBlankWorld', { worldId: this.props.worldId }).then((world) => this.setState({ world }))
   }
 
   render () {
@@ -22,9 +22,9 @@ class HomeTableRow extends Component {
       return (<></>)
     }
     return (
-      <Link to={`/page/${this.state.world.name}`} class="HomeTableRow-Link HomeTableRow-Container">
-          <div className="HomeTableRow-WorldName">{this.state.world.name}</div>
-          <div className="HomeTableRow-WorldInfo">{this.state.world.description}</div>
+      <Link to={`/page/${this.state.world.pageName}`} className="HomeTableRow-Link HomeTableRow-Container">
+          <div className="HomeTableRow-WorldName">{this.state.world.pageName}</div>
+          <div className="HomeTableRow-WorldInfo">{this.state.world.pageDescription}</div>
       </Link>
     )
   }

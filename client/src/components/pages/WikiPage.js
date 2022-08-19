@@ -35,9 +35,9 @@ class WikiPage extends Component {
           <div className="WikiPage-IntroContent">
             <div className="WikiPage-IntroContentLeft">
               <div className="WikiPage-IntroDescription"></div>
-              <WikiPageToC page={this.state.world} class="WikiPage-ToC"/>
+              <WikiPageToC page={this.state.world} className="WikiPage-ToC"/>
             </div>
-            <WikiPageInfoBox page={this.state.world} class="WikiPage-InfoBox"/>
+            <WikiPageInfoBox page={this.state.world} className="WikiPage-InfoBox"/>
           </div>
           <div className="WikiPage-Content">
             {this.state.world.sections.map((section) => (

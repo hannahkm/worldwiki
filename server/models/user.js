@@ -4,7 +4,8 @@ const UserSchema = new mongoose.Schema({
   name: String,
   username: String,
   googleid: String,
-  email: String
+  email: String,
+  ownedWorlds: [String]
 })
 
 // compile model from schema

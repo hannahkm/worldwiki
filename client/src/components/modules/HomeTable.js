@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from '@reach/router'
-// import { get } from '../../utilities'
+import { get } from '../../utilities'
 
 import './HomeTable.css'
 
@@ -11,27 +11,18 @@ class HomeTable extends Component {
     super(props)
     this.state = {
       user: undefined,
-      userWorlds: [{
-        id: 'testing',
-        name: 'world name',
-        description: 'hello world'
-      }]
+      userWorlds: []
     }
   }
 
   componentDidMount () {
     this.setState({ user: this.props.user })
-    // get('/api/user/worlds', {}).then((worlds) => this.setState({ userWorlds: worlds }))
+    get('/api/whoami').then((u) => {
+      this.setState({ userWorlds: u.ownedWorlds })
+    })
   }
 
   render () {
-    if (this.state.userWorlds.length === 0) {
-      return (
-        <>
-          You have not created any pages!
-        </>
-      )
-    }
     return (
       <>
         <div className="HomeTable-Header">
@@ -41,8 +32,8 @@ class HomeTable extends Component {
           </Link>
         </div>
         <div className="HomeTable-TableContainer">
-          {this.state.userWorlds.map((world) => (
-            <HomeTableRow world={world} key={world.id}/>
+          {this.state.userWorlds.map((worldId) => (
+            <HomeTableRow worldId={worldId} key={worldId}/>
           ))}
         </div>
       </>
