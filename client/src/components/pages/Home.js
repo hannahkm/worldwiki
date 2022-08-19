@@ -47,7 +47,7 @@ class Home extends Component {
     return (
       <>
         <div className="Home-UserWorlds">
-          <HomeTable user={this.state.user}/>
+          <HomeTable/>
         </div>
       </>
     )

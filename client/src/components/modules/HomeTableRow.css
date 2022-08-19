@@ -1,5 +1,4 @@
 .HomeTableRow-Container {
-    height: 2vh;
     margin: auto;
     display: flex;
     flex-direction: row;
@@ -29,5 +28,9 @@
 }
 
 .HomeTableRow-WorldInfo{
+    max-width: 50%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     color: var(--darkgrey);
 }

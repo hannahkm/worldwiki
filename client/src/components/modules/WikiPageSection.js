@@ -6,7 +6,8 @@ class WikiPageSection extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      section: undefined
+      sectionName: undefined,
+      sectionContent: undefined
     }
   }
 
@@ -14,20 +15,15 @@ class WikiPageSection extends Component {
   }
 
   render () {
-    if (!this.state.section) {
-      return (
-        <></>
-      )
-    }
     return (
-      <>
+      <div className="WikiPageSection-Container">
         <div className="WikiPageSection-Heading">
-          <h1 className="WikiPageSection-SectionName">{this.state.section.sectionName}</h1>
+          <h1 className="WikiPageSection-SectionName">{this.props.sectionName}</h1>
           <div className="WikiPageSection-EditButton">[Edit]</div>
-          <hr/>
         </div>
-        <div className="WikiPageSection-Content">{this.state.section.sectionContent}</div>
-      </>
+        <hr/>
+        <div className="WikiPageSection-Content">{this.props.sectionContent}</div>
+      </div>
     )
   }
 }

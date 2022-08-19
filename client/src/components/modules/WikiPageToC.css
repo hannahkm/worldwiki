@@ -1,0 +1,21 @@
+.WikiPageToC-Container {
+    margin: 1.5vh 0;
+    font-size: 2.2vh;
+    width: 30%;
+    height: -moz-fit-content;
+    height: -webkit-fit-content;
+    height: -fit-content;
+    border: 1px var(--darkgrey) solid;
+    padding: var(--s);
+    background-color: var(--lightgrey);
+}
+
+.WikiPageToC-Heading {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 1vh;
+}
+
+.WikiPageToC-Section {
+    margin-bottom: 0.5vh;
+}

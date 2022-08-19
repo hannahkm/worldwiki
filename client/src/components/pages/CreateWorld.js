@@ -14,8 +14,8 @@ class CreateWorld extends Component {
       worldId: '',
       worldName: '',
       worldDescription: '',
-      worldSections: new Map(),
-      worldInfoSections: new Map()
+      worldSections: {},
+      worldInfoSections: {}
     }
     get('/api/getOrCreateBlankWorld', {
       worldId: this.props.worldId,
@@ -25,10 +25,9 @@ class CreateWorld extends Component {
         worldId: world.pageId,
         worldName: world.pageName,
         worldDescription: world.pageDescription,
-        worldSections: world.sections,
-        worldInfoSections: world.infoBox.infoSections
+        worldSections: Object.entries(world.sections),
+        worldInfoSections: Object.entries(world.infoBox.infoSections)
       })
-      console.log(this.state)
     })
   }
 
@@ -51,8 +50,7 @@ class CreateWorld extends Component {
       sectionName: 'New Section',
       sectionContent: 'Talk about anything here!'
     }).then((w) => {
-      this.setState({ worldSections: w.sections })
-      console.log(this.state)
+      this.setState({ worldSections: Object.entries(w.sections) })
     })
   }
 
@@ -63,8 +61,7 @@ class CreateWorld extends Component {
       sectionName: 'New Section',
       sectionContent: 'Say something here!'
     }).then((w) => {
-      this.setState({ worldInfoSections: w.infoBox.infoSections })
-      console.log(this.state)
+      this.setState({ worldInfoSections: Object.entries(w.infoBox.infoSections) })
     })
   }
 
@@ -84,9 +81,9 @@ class CreateWorld extends Component {
     post('/api/user/addWorld', {
       userId: this.props.userId,
       worldId: this.state.worldId
-    }).then((u) => console.log(u))
+    })
 
-    // navigate(`/WikiPage/${this.state.worldId}`)
+    navigate(`/page/${this.state.worldId}`)
   }
 
   render () {
@@ -107,9 +104,9 @@ class CreateWorld extends Component {
               <button className="CreateWorld-NewSectionButton" onClick={this.handleNewSection}>New Section</button>
             </div>
             <div className="CreateWorld-Sections">
-              {this.state.world
-                ? this.state.world.sections.map((section) => (
-                  <CreateWorldNewSection className="CreateWorld-Section" worldId={this.state.worldId} section={section} key={section.name}/>
+              {this.state.worldSections.length > 0
+                ? this.state.worldSections.map((section) => (
+                  <CreateWorldNewSection className="CreateWorld-Section" worldId={this.state.worldId} sectionName={section[0]} sectionValue={section[1]} key={section[0]}/>
                 ))
                 : null}
             </div>
@@ -118,9 +115,9 @@ class CreateWorld extends Component {
               <button className="CreateWorld-NewInfoBoxSection" onClick={this.handleNewInfoSection}>New Section</button>
             </div>
             <div className="CreateWorld-InfoBoxSections">
-              {this.state.world
-                ? this.state.world.sections.map((section) => (
-                  <CreateWorldNewInfoBoxSection className="CreateWorld-InfoSection" worldId={this.state.worldId} section={section} key={section.name}/>
+              {this.state.worldInfoSections.length > 0
+                ? this.state.worldInfoSections.map((section) => (
+                  <CreateWorldNewInfoBoxSection className="CreateWorld-InfoSection" worldId={this.state.worldId} sectionName={section[0]} sectionValue={section[1]} key={section[0]}/>
                 ))
                 : null}
             </div>

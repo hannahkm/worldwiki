@@ -1,0 +1,33 @@
+.WikiPage-Heading {
+    margin-top: 2vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 5vh;
+}
+
+.WikiPage-Author {
+    font-size: 1.5vh;
+}
+
+.WikiPage-IntroContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 2.5vh;
+    margin-top: 2vh;
+}
+
+.WikiPage-IntroContentLeft {
+    width: 65%;
+}
+
+.WikiPage-InfoBox {
+    width: 35%;
+}
+
+.WikiPage-Content {
+    display: flex;
+    flex-direction: column;
+}

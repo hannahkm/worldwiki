@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { get } from '../../utilities'
 
 import './WikiPageInfoBox.css'
 
@@ -6,37 +7,36 @@ class WikiPageInfoBox extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      world: undefined
+      world: undefined,
+      worldInfoSections: {}
     }
   }
 
   componentDidMount () {
+    get('/api/getOrCreateBlankWorld', { worldId: this.props.page }).then((world) => {
+      this.setState({
+        world,
+        worldInfoSections: Object.entries(world.infoBox.infoSections)
+      })
+    })
   }
 
   render () {
-    if (!this.state.world || this.state.world.infoBox.length == 0) {
+    if (!this.state.world || this.state.worldInfoSections.length === 0) {
       return (
         <></>
       )
     }
     return (
-      <>
-        {this.state.world.infoBox.infoSections.map((section) => (
-          <div>
-            <h1 className="WikiPageInfoBox-SectionHeader">{section.sectionName}</h1>
-            <div className="WikiPageInfoBox-SectionContent">
-              {section.sectionContent.map((_content) => (
-                <div className="WikiPageInfoBox-SectionContentRow">
-                  <div className="WikiPageInfoBox-SectionContentLabel">label here</div>
-                  <div className="WikiPageInfoBox-SectionContentValue">value here</div>
-                </div>
-              ))}
-            </div>
+      <div className="WikiPageInfoBox-Container">
+        <div className="WikiPageInfoBox-Heading">{this.state.world.pageName}</div>
+        {this.state.worldInfoSections.map((section) => (
+          <div className="WikiPageInfoBox-SectionRow" key={section[0]}>
+            <div className="WikiPageInfoBox-SectionContentLabel">{section[0]}</div>
+            <div className="WikiPageInfoBox-SectionContentValue">{section[1]}</div>
           </div>
-        ))
-
-        }
-      </>
+        ))}
+      </div>
     )
   }
 }

@@ -59,8 +59,12 @@ router.get('/activeUsers', (req, res) => {
 
 router.post('/user/addWorld', (req, res) => {
   User.findById(req.body.userId).then((user) => {
-    user.ownedWorlds = [...user.ownedWorlds, req.body.worldId]
-    user.save().then((u) => res.send(u))
+    if (user) {
+      user.ownedWorlds = [...user.ownedWorlds, req.body.worldId]
+      user.save().then((u) => res.send(u))
+    } else {
+      res.send({})
+    }
   })
 })
 
@@ -71,9 +75,9 @@ router.get('/getOrCreateBlankWorld', (req, res) => {
   World.findOne({
     pageId: req.query.worldId
   }).then((world) => {
-    if (world) res.send(world)
-
-    else {
+    if (world) {
+      res.send(world)
+    } else {
       const newWorld = new World({
         pageId: mongoose.Types.ObjectId(),
         pageName: '',
@@ -81,9 +85,9 @@ router.get('/getOrCreateBlankWorld', (req, res) => {
         pageDescription: '',
         infoBox: {
           infoImage: '',
-          infoSections: new Map()
+          infoSections: new Map([])
         },
-        sections: new Map()
+        sections: new Map([])
       })
       newWorld.save().then((w) => res.send(w))
     }
@@ -99,9 +103,9 @@ router.post('/newWorld', (req, res) => {
     pageDescription: req.query.worldDescription,
     infoBox: {
       infoImage: req.query.infoImageURL,
-      infoSections: new Map()
+      infoSections: new Map([])
     },
-    sections: new Map()
+    sections: new Map([])
   })
   newWorld.save().then((u) => res.send(u))
 })

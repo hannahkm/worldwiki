@@ -13,7 +13,6 @@ class HomeTableRow extends Component {
   }
 
   componentDidMount () {
-    console.log(this.props.worldId)
     get('/api/getOrCreateBlankWorld', { worldId: this.props.worldId }).then((world) => this.setState({ world }))
   }
 
@@ -22,7 +21,7 @@ class HomeTableRow extends Component {
       return (<></>)
     }
     return (
-      <Link to={`/page/${this.state.world.pageName}`} className="HomeTableRow-Link HomeTableRow-Container">
+      <Link to={`/page/${this.state.world.pageId}`} className="HomeTableRow-Link HomeTableRow-Container">
           <div className="HomeTableRow-WorldName">{this.state.world.pageName}</div>
           <div className="HomeTableRow-WorldInfo">{this.state.world.pageDescription}</div>
       </Link>

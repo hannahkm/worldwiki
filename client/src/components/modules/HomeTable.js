@@ -16,9 +16,8 @@ class HomeTable extends Component {
   }
 
   componentDidMount () {
-    this.setState({ user: this.props.user })
     get('/api/whoami').then((u) => {
-      this.setState({ userWorlds: u.ownedWorlds })
+      this.setState({ user: u, userWorlds: u.ownedWorlds })
     })
   }
 

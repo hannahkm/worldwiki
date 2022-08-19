@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { get } from '../../utilities'
 
 import '../../utilities.css'
 import './WikiPage.css'
@@ -10,12 +11,30 @@ class WikiPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      world: undefined
+      world: undefined,
+      worldId: '',
+      worldName: 'Loading page...',
+      worldSections: {},
+      worldInfoSections: {},
+      authorName: 'Unknown'
     }
   }
 
   componentDidMount () {
-    document.title = 'Wiki Page'
+    get('/api/getOrCreateBlankWorld', { worldId: this.props.pageId }).then((world) => {
+      this.setState({
+        world,
+        worldId: world.pageId,
+        worldName: world.pageName,
+        worldSections: Object.entries(world.sections),
+        worldInfoSections: Object.entries(world.infoBox.infoSections)
+      })
+      document.title = this.state.worldName + ' | WorldWiki'
+
+      get('/api/user', { userid: this.state.world.pageAuthor }).then((author) => {
+        this.setState({ authorName: author.name })
+      })
+    })
   }
 
   render () {
@@ -27,21 +46,21 @@ class WikiPage extends Component {
     return (
         <>
           <div className="WikiPage-Heading">
-            <h1 className="WikiPage-PageName">{this.state.world.name}</h1>
+            <h1 className="WikiPage-PageName">{this.state.world.pageName}</h1>
             <div className="WikiPage-EditButton">[Edit]</div>
-            <hr/>
-            <p className="WikiPage-Author">From WikiWorld, by {this.state.world.author}</p>
           </div>
+          <hr/>
+          <div className="WikiPage-Author">From WikiWorld, by {this.state.authorName}</div>
           <div className="WikiPage-IntroContent">
             <div className="WikiPage-IntroContentLeft">
-              <div className="WikiPage-IntroDescription"></div>
-              <WikiPageToC page={this.state.world} className="WikiPage-ToC"/>
+              <div className="WikiPage-IntroDescription">{this.state.world.pageDescription}</div>
+              <WikiPageToC page={this.state.worldId} className="WikiPage-ToC"/>
             </div>
-            <WikiPageInfoBox page={this.state.world} className="WikiPage-InfoBox"/>
+            <WikiPageInfoBox page={this.state.worldId} className="WikiPage-InfoBox"/>
           </div>
           <div className="WikiPage-Content">
-            {this.state.world.sections.map((section) => (
-              <WikiPageSection section={section} id={section.name}/>
+            {this.state.worldSections.map((section) => (
+                <WikiPageSection sectionName={section[0]} sectionContent={section[1]} key={section[0]}/>
             ))}
           </div>
         </>
